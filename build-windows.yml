@@ -1,0 +1,18 @@
+name: Build Windows VST3
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure (downloads JUCE automatically)
+        run: cmake -B build -A x64
+      - name: Build VST3
+        run: cmake --build build --config Release --target SlikBezzleVocalMaster_VST3
+      - name: Upload plugin
+        uses: actions/upload-artifact@v4
+        with:
+          name: SLIK-BEZZLE-VOCAL-MASTER-VST3-Windows
+          path: build/SlikBezzleVocalMaster_artefacts/Release/VST3
